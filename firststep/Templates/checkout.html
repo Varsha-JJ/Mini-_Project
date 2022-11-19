@@ -19,60 +19,43 @@
                             <div class="col-md-6">
                                 <div class="checkout-form-list">
                                     <label>First Name <span class="required">*</span></label>
-                                    <input type="text" placeholder="" />
+                                    <input type="text" name="fname" value="{{user.first_name}}" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="checkout-form-list mb-30">
                                     <label>Last Name <span class="required">*</span></label>
-                                    <input type="text" placeholder="" />
+                                    <input type="text" name="lname" value="{{user.last_name}}"/>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="checkout-form-list">
                                     <label>Address <span class="required">*</span></label>
-                                    <input type="text" placeholder="Street address" />
+                                    <input type="text" name="addres" value="{{user.address}}" />
                                 </div>
-                            </div>
+                            </div><br>
                             <div class="col-md-12">
                                 <div class="checkout-form-list mb-30">
                                     <label>Town / City <span class="required">*</span></label>
-                                    <input type="text" placeholder="Town / City" />
+                                    <input type="text"  name="city" value="{{user.city}}" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="checkout-form-list mb-30">
                                     <label>State / County <span class="required">*</span></label>
-                                    <input type="text" placeholder="" />
+                                    <input type="text" name="district" value="{{user.state}}"/>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="checkout-form-list mb-30">
-                                    <label>Postcode / Zip <span class="required">*</span></label>
-                                    <input type="text" placeholder="Postcode / Zip" />
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="checkout-form-list mb-30">
-                                    <label>Email Address <span class="required">*</span></label>
-                                    <input type="email" placeholder="" />
+                                    <label>Pincode  <span class="required">*</span></label>
+                                    <input type="text" name="pincode" value="{{user.pincode}}" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="checkout-form-list mb-30">
                                     <label>Phone  <span class="required">*</span></label>
-                                    <input type="text" placeholder="Postcode / Zip" />
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="checkout-form-list create-acc mb-30">
-                                    <input id="cbox" type="checkbox" />
-                                    <label>Create an account?</label>
-                                </div>
-                                <div id="cbox_info" class="checkout-form-list create-accounts mb-25">
-                                    <p class="mb-10">Create an account by entering the information below. If you are a returning customer please login at the top of the page.</p>
-                                    <label>Account password  <span class="required">*</span></label>
-                                    <input type="password" placeholder="password" />
+                                    <input type="text" name="phone" value="{{user.contact}}" />
                                 </div>
                             </div>
                         </div>
@@ -90,31 +73,25 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {% for i in cart %}
                                     <tr class="cart_item">
                                         <td class="product-name">
-                                            Products Name Here <strong class="product-quantity"> × 1</strong>
+                                            {{i.product.name}}<strong class="product-quantity"> × {{i.product_qty}}</strong>
                                         </td>
                                         <td class="product-total">
-                                            <span class="amount">£165.00</span>
+                                            <span class="amount">Rs.{{i.price}}</span>
                                         </td>
                                     </tr>
-                                    <tr class="cart_item">
-                                        <td class="product-name">
-                                            Products Name Here <strong class="product-quantity"> × 1</strong>
-                                        </td>
-                                        <td class="product-total">
-                                            <span class="amount">£50.00</span>
-                                        </td>
-                                    </tr>
+                                    {% endfor %} 
                                 </tbody>
                                 <tfoot>
                                     <tr class="cart-subtotal">
                                         <th>Cart Subtotal</th>
-                                        <td><span class="amount">£215.00</span></td>
+                                        <td><span class="amount">{{total}}</span></td>
                                     </tr>
                                     <tr class="order-total">
                                         <th>Order Total</th>
-                                        <td><strong><span class="amount">£215.00</span></strong>
+                                        <td><strong><span class="amount">{{total}}</span></strong>
                                         </td>
                                     </tr>
                                 </tfoot>

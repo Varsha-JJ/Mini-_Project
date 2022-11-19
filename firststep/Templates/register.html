@@ -526,6 +526,7 @@
                     <div class="col-sm-12">
                         <form class="form-horizontal" onclick="return validation()"  action="{% url 'register' %}" id="input-form"  method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
+                            {% include 'Message.html' %}
                             <fieldset>
                                 <legend>Your Personal Details</legend>
                                 <div class="form-group">

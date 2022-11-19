@@ -157,14 +157,23 @@
                         <div class="col-lg-3 col-sm-7 col-7">
                             <div class="cart-box text-right">
                                 <ul>
-                                    <li>{{request.user.first_name}} <i class="fa fa-angle-down"></i></i>
+                                    {% if user.is_authenticated %}
+                                    <li>{{user.first_name}} <i class="fa fa-angle-down"></i></i>
                                         <ul class="ht-dropdown">
                                             <li><a href="{% url 'account' %}">My profile</a></li>
-                                            <li><a href="{% url 'login' %}">Logout</a></li>
+                                            <li><a href="{% url 'logout' %}">Logout</a></li>
                                         </ul>
-                                    </li>                                    
+                                    </li>
+                                    {% else %}
+                                    <li><a href="#"><i class="fa fa-user"></i></a>
+                                        <ul class="ht-dropdown">
+                                            <li><a href="{% url 'login' %}">Login</a></li>
+                                            <li><a href="{% url 'register' %}">Register</a></li>
+                                        </ul>
+                                    </li>
+                                    {% endif %}                                    
                                     <li><a href="{% url 'wishlist' %}"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="{% url 'cart' %}"><i class="fa fa-shopping-basket"></i><span class="cart-counter">2</span></a>
+                                    <li><a href="{% url 'cart' %}"><i class="fa fa-shopping-basket"></i><span class="cart-counter">{% if totalitem > 0 %} {{totalitem}} {% endif %}</span></a>
                                     </li>
                                 </ul>
                             </div>
@@ -200,6 +209,17 @@
                     <div class="col-md-12">
                         <!-- Form Start -->
                         <form action="#">
+                            {% csrf_token %}
+                            {% if not cart %}
+
+                            <div style="height:300px;text-align: center;">
+                                  <h2 style="font-family: sans-serif;color: rgb(246,86, 12);">Your Cart is Empty !!!!</h2><br>
+                                  <div class="button-area">
+                                    <a href="{% url 'shop' %}"style="font-weight:bold;color:rgb(240, 16, 16);">Continue Shopping</a>
+                                    </div>
+                            </div>
+                                
+                            {% else %}
                             <!-- Table Content Start -->
                             <div class="table-content table-responsive mb-50">
                                 <table>
@@ -217,15 +237,14 @@
                                         {% for i in cart %}
                                         <tr>
                                             <td class="product-thumbnail">
-                                                <a href="#"><img src="{{i.product.product_image.url}}" alt="cart-image" /></a>
+                                                <a href="{% url 'product_detail' i.product_id %}"><img src="{{i.product.product_image.url}}" alt="cart-image" /></a>
                                             </td>
                                             <td class="product-name"><a href="#">{{i.product.name}}</a></td>
-                                            <td class="product-price"><span class="amount">Rs.{{i.product.selling_price}}</span></td>
-                                            <td class="product-quantity"><input type="number" value="{{i.product_qty}}" /></td>
-                                            <a class="plus-a" data-max="1000" href="{% url 'plusqty' i.id %}">&#43;</a>
-                                            <a class="minus-a" data-min="1" href="{% url 'minusqty' i.id %}">&#45;</a>
+                                            <td class="product-price"><span class="amount">Rs.{{i.product.price}}</span></td>
+                                            <td class="product-quantity"><a class="plus-a" data-max="1000" href="{% url 'plusqty' i.id %}">&#43;</a><input type="text" value="{{i.product_qty}}" />                                            <a class="minus-a" data-min="1" href="{% url 'minusqty' i.id %}">&#45;</a>
+                                            </td>
                                             <td class="product-subtotal">Rs.{{i.price}}</td>
-                                            <td class="product-remove"> <a href="#"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                                            <td class="product-remove"> <a href="{% url 'de_cart' i.id %}"><i class="fa fa-times" aria-hidden="true"></i></a></td>
                                         </tr>
                                         {% endfor %}
                                         <!-- <tr>
@@ -246,8 +265,8 @@
                                <!-- Cart Button Start -->
                                 <div class="col-lg-8 col-md-7">
                                     <div class="buttons-cart">
-                                        <input type="submit" value="Update Cart" />
-                                        <a href="#">Continue Shopping</a>
+                                        <!-- <input type="submit" value="Update Cart" /> -->
+                                        <a href="{% url 'shop' %}">Continue Shopping</a>
                                     </div>
                                 </div>
                                 <!-- Cart Button Start -->
@@ -260,24 +279,25 @@
                                             <tbody>
                                                 <tr class="cart-subtotal">
                                                     <th>Subtotal</th>
-                                                    <td><span class="amount">$215.00</span></td>
+                                                    <td><span class="amount">{{total}}</span></td>
                                                 </tr>
                                                 <tr class="order-total">
                                                     <th>Total</th>
                                                     <td>
-                                                        <strong><span class="amount">$215.00</span></strong>
+                                                        <strong><span class="amount">{{total}}</span></strong>
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                         <div class="wc-proceed-to-checkout">
-                                            <a href="#">Proceed to Checkout</a>
+                                            <a href="{% url 'checkout' %}">Proceed to Checkout</a>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- Cart Totals End -->
                             </div>
                             <!-- Row End -->
+                            {% endif %}
                         </form>
                         <!-- Form End -->
                     </div>

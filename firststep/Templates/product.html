@@ -144,13 +144,21 @@
                         <div class="col-lg-3 col-sm-7 col-7">
                             <div class="cart-box text-right">
                                 <ul>
-                                    <li>{{request.user.first_name}} <i class="fa fa-angle-down"></i></i>
+                                    {% if user.is_authenticated %}
+                                    <li>{{user.first_name}} <i class="fa fa-angle-down"></i></i>
                                         <ul class="ht-dropdown">
                                             <li><a href="{% url 'account' %}">My profile</a></li>
-                                            <li><a href="{% url 'changepassword' %}">Change password</a></li>
-                                            <li><a href="{% url 'login' %}">Logout</a></li>
+                                            <li><a href="{% url 'logout' %}">Logout</a></li>
                                         </ul>
-                                    </li>                                    
+                                    </li>
+                                    {% else %}
+                                    <li><a href="#"><i class="fa fa-user"></i></a>
+                                        <ul class="ht-dropdown">
+                                            <li><a href="{% url 'login' %}">Login</a></li>
+                                            <li><a href="{% url 'register' %}">Register</a></li>
+                                        </ul>
+                                    </li>
+                                    {% endif %}                                   
                                     <li><a href="{% url 'wishlist' %}"><i class="fa fa-heart-o"></i></a></li>
                                     <li><a href="#"><i class="fa fa-shopping-basket"></i><span class="cart-counter">2</span></a>
                                         <ul class="ht-dropdown main-cart-box">
@@ -288,7 +296,7 @@
                             <div class="box-quantity">
                                 <form action="#">
                                     <!-- <input class="number" id="numeric" type="number" min="1" value="1"> -->
-                                    <a class="add-cart" href="{% url 'cart' %}">add to cart</a>
+                                    <a class="add-cart" href="{% url 'addcart' product.id %}">add to cart</a>
                                 </form>
                             </div>
                             <div class="product-link">
@@ -298,7 +306,7 @@
                             </div>
                             <br>
                             <p class="in-stock">PRODUCT DESCRIPTION</p>
-                            <p class="ptb-20">{{product.descrtion }}</p>
+                            <p class="ptb-20">{{product.description }}</p>
                         </div>
                     </div>
                     <!-- Thumbnail Description End -->

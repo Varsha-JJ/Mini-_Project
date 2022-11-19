@@ -5,7 +5,7 @@ from .models import Account
 from django.contrib import auth
 from django.contrib.auth import authenticate ,login,logout
 from django.contrib.auth.decorators import login_required
-from product.models import Category
+from product.models import Category,Product
 
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -63,7 +63,7 @@ def register(request):
                 user = Account.objects.create_user(first_name=fname,last_name=lname,address=address,email=email,contact=phone,city=city,state=district,pincode=pincode,password=password)
                 user.is_user = True
                 user.save()
-                messages.success(request, 'Please verify your email for login!')
+                # messages.info(request, 'Please verify your email for login!')
 
                 current_site = get_current_site(request)
                 message = render_to_string('account_verification_email.html', {
@@ -80,7 +80,7 @@ def register(request):
                         [email],
                         fail_silently=False,
                     )
-                messages.info(request, 'Your account has been successfully created..please login')
+                messages.info(request, 'Please verify your email for login !!!')
                 return redirect('login')
             # return redirect('/login/?command=verification&email=' + email)
         else:
@@ -103,10 +103,13 @@ def logout(request):
 
 def home(request):
     category = Category.objects.all()
-    context = {
-        'data':category
-    }
-    return render(request, "home.html",context)
+    products = Product.objects.all()
+    catid = request.GET.get('id')
+    if catid:
+        products = Product.objects.filter(category_id=catid)
+    else:
+        products = Product.objects.all()
+    return render(request, "home.html", {'data':category} )
    
 
 
@@ -225,7 +228,36 @@ def changepassword(request):
 # def error(request,exception):
 #     return render(request, '404.html')
 
+@login_required(login_url='login')
+def profile_update(request):
+    if request.method == "POST":
+        fname = request.POST.get('fname')
+        lname = request.POST.get('lname')
+        address = request.POST.get('addres')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        city = request.POST.get('city')
+        district = request.POST.get('district')
+        pincode = request.POST.get('pincode')
+        password = request.POST.get('password')
+        user_id = request.user.id
 
+        user = Account.objects.get(id=user_id)
+        user.first_name = fname
+        user.last_name = lname
+        user.address = address
+        user.email = email
+        user.contact = phone
+        user.city = city
+        user.state = district
+        user.pincode = pincode
+
+
+        if password != None and password != "":
+            user.set_password(password)
+        user.save()
+        messages.success(request,'Profile Updated Successfully')
+        return redirect('account')
 
 
 

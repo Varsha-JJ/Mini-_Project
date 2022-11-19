@@ -8,6 +8,8 @@ admin.site.register(Category)
 admin.site.register(Color)
 admin.site.register(Size)
 
+
+
 def export_productdetail(modeladmin, request, queryset):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="productdetail.csv"'

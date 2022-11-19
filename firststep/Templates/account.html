@@ -15,7 +15,7 @@
                <div class="row no-gutters align-items-center">
                    <div class="col-lg-3 col-md-6">
                        <div class="d-single-info">
-                           <p class="user-name">Hello <span>yourmail@info</span></p>
+                           <p class="user-name">Hello <span>{{user.first_name}}</span></p>
                        </div>
                    </div>
                </div>
@@ -29,11 +29,13 @@
                         <li><a data-toggle="tab" href="#address">Addresses</a></li>
                         <li><a data-toggle="tab" href="#account-details">Account details</a></li>
                         <li><a  href="{% url 'changepassword' %}">Change Password</a></li>
-                        <li><a href="login.html" href="#logout">logout</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-10">
                     <!-- Tab panes -->
+                    {% for message in messages %}
+                    <h3 style="font-size:15px;margin-top:-5px;color: green;" class="font-weight-bold">{{message}}</h3>
+                    {% endfor %}
                     <div class="tab-content dashboard-content mt-all-40">
                         <div id="dashboard" class="tab-pane active">
                             <h3>Dashboard </h3>
@@ -73,57 +75,68 @@
                         </div>
                         <div id="address" class="tab-pane">
                             <p>The following addresses will be used on the checkout page by default.</p>
-                            <h4 class="billing-address">Billing address</h4>
-                            <a class="view" href="#">edit</a>
-                            <p>steven smith</p>
-                            <p>Australia</p>   
+                            <h3 class="billing-address"><b>Billing address</b></h3>
+                            <!-- <a class="view" href="#">edit</a> -->
+                            <br><br>
+                            <p>{{user.first_name}} {{user.last_name}}</p>
+                            <p>{{user.address}}</p>
+                            <p>{{user.email}}</p> 
+                            <p>{{user.contact}}</p> 
+                            <p>{{user.city}}</p>
+                            <p>{{user.district}}</p>
+                            <p>{{user.pincode}}</p> 
                         </div>
                         <div id="account-details" class="tab-pane fade">
                             <h3>Account details </h3>
                             <div class="register-form login-form clearfix">
-                                <form action="#">
+                                <form action="{% url 'profile_update' %}"  method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
                                     <div class="form-group row">
                                         <label for="f-name" class="col-lg-3 col-md-4 col-form-label">First Name</label>
                                         <div class="col-lg-6 col-md-8">
-                                            <input type="text" class="form-control" id="f-name">
+                                            <input type="text" class="form-control" id="f-name" name="fname" value="{{user.first_name}}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="l-name" class="col-lg-3 col-md-4 col-form-label">Last Name</label>
                                         <div class="col-lg-6 col-md-8">
-                                            <input type="text" class="form-control" id="l-name">
+                                            <input type="text" class="form-control" id="l-name" name="lname" value="{{user.last_name}}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="email" class="col-lg-3 col-md-4 col-form-label">Address</label>
+                                        <div class="col-lg-6 col-md-8">
+                                            <input type="text" class="form-control" id="email" name="addres" value="{{user.address}}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="email" class="col-lg-3 col-md-4 col-form-label">Email address</label>
                                         <div class="col-lg-6 col-md-8">
-                                            <input type="text" class="form-control" id="email">
+                                            <input type="text" class="form-control" id="email" name="email" value="{{user.email}}" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="inputpassword" class="col-lg-3 col-md-4 col-form-label">Current password</label>
+                                        <label for="email" class="col-lg-3 col-md-4 col-form-label">Phone</label>
                                         <div class="col-lg-6 col-md-8">
-                                            <input type="password" class="form-control" id="inputpassword">
+                                            <input type="text" class="form-control" id="email" name="phone" value="{{user.contact}}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="newpassword" class="col-lg-3 col-md-4 col-form-label">New password</label>
+                                        <label for="email" class="col-lg-3 col-md-4 col-form-label">City</label>
                                         <div class="col-lg-6 col-md-8">
-                                            <input type="password" class="form-control" id="newpassword">
-                                            <button class="btn show-btn" type="button">Show</button>
+                                            <input type="text" class="form-control" id="email" name="city" value="{{user.city}}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="v-password" class="col-lg-3 col-md-4 col-form-label">Confirm password</label>
+                                        <label for="email" class="col-lg-3 col-md-4 col-form-label">State</label>
                                         <div class="col-lg-6 col-md-8">
-                                            <input type="password" class="form-control" id="c-password">
-                                            <button class="btn show-btn" type="button">Show</button>
+                                            <input type="text" class="form-control" id="email" name="district" value="{{user.state}}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="birth" class="col-lg-3 col-md-4 col-form-label">Birthdate</label>
+                                        <label for="email" class="col-lg-3 col-md-4 col-form-label">Pincode</label>
                                         <div class="col-lg-6 col-md-8">
-                                            <input type="text" class="form-control" id="birth" placeholder="MM/DD/YYYY">
+                                            <input type="text" class="form-control" id="email" name="pincode" value="{{user.pincode}}">
                                         </div>
                                     </div>
                                     <div class="register-box mt-40">

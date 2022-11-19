@@ -60,6 +60,19 @@ class Size(models.Model):
     def __str__(self):
        return self.name
 
+
+class Filter_Price(models.Model):
+    Filter_Price = (
+        ('0 to 250','0 TO 250'),
+        ('250 TO 500','250 TO 500'),
+        ('500 TO 1000','500 TO 1000'),
+        ('1000 TO 2000','1000 TO 2000')
+    )
+
+    price = models.CharField(choices=Filter_Price,max_length=65)
+
+
+
 class Cart(models.Model):
     user=models.ForeignKey(Account,on_delete=models.CASCADE)
     product=models.ForeignKey(Product,on_delete=models.CASCADE)
@@ -70,3 +83,8 @@ class Cart(models.Model):
         price=[self.product.price]
         return sum(price)
     
+
+
+class Wishlist(models.Model):
+    user=models.ForeignKey(Account,on_delete=models.CASCADE)
+    product=models.ForeignKey(Product,on_delete=models.CASCADE)
