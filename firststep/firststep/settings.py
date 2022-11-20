@@ -149,3 +149,8 @@ SERVER_EMAIL = 'onlinefirststep1@gmail.com'
 EMAIL_HOST_PASSWORD = 'whoqivtvzygpwdou'
 
 EMAIL_USE_TLS = True
+
+
+
+RAZORPAY_API_KEY = 'rzp_test_ou7rNcgJfkqsyG'
+RAZORPAY_API_SECRET_KEY = '0XWzrdn5mNWzarL1dWpgMV7B'

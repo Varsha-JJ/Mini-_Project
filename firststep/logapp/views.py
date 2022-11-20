@@ -7,6 +7,8 @@ from django.contrib.auth import authenticate ,login,logout
 from django.contrib.auth.decorators import login_required
 from product.models import Category,Product
 
+from product.models import OrderPlaced,Payment
+
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -203,7 +205,13 @@ def resetPassword(request):
 
 @login_required(login_url='login')
 def account(request):
-    return render(request, "account.html")
+    orders = OrderPlaced.objects.filter(
+        user=request.user, is_ordered=True).order_by('ordered_date')
+    context = {
+        'orders': orders,
+    }
+    return render(request,'account.html',context)
+
 
 @login_required(login_url='login/')
 def changepassword(request):

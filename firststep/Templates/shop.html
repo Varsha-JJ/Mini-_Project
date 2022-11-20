@@ -157,11 +157,11 @@
                                     </li>
                                     {% endif %}                                    
                                     <li><a href="{% url 'wishlist' %}"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-shopping-basket"></i><span class="cart-counter">{% if totalitem > 0 %} {{totalitem}} {% endif %}</span></a>
-                                        <ul class="ht-dropdown main-cart-box">
-                                            <li>
+                                    <li><a href="{% url 'cart' %}"><i class="fa fa-shopping-basket"></i><span class="cart-counter">{% if totalitem > 0 %} {{totalitem}} {% endif %}</span></a>
+                                        <!-- <ul class="ht-dropdown main-cart-box">
+                                            <li> -->
                                                 <!-- Cart Box Start -->
-                                                <div class="single-cart-box">
+                                                <!-- <div class="single-cart-box">
                                                     <div class="cart-img">
                                                         <a href="#"><img src="{% static 'img/menu/1.jpg' %}" alt="cart-image" width="270px" height="210px"></a>
                                                     </div>
@@ -170,10 +170,10 @@
                                                         <span>1 × $399.00</span>
                                                     </div>
                                                     <a class="del-icone" href="#"><i class="fa fa-window-close-o"></i></a>
-                                                </div>
+                                                </div> -->
                                                 <!-- Cart Box End -->
                                                 <!-- Cart Box Start -->
-                                                <div class="single-cart-box">
+                                                <!-- <div class="single-cart-box">
                                                     <div class="cart-img">
                                                         <a href="#"><img src="{% static 'img/menu/2.jpg' %}" alt="cart-image"></a>
                                                     </div>
@@ -182,18 +182,18 @@
                                                         <span>2 × $299.00</span>
                                                     </div>
                                                     <a class="del-icone" href="#"><i class="fa fa-window-close-o"></i></a>
-                                                </div>
+                                                </div> -->
                                                 <!-- Cart Box End -->
                                                 <!-- Cart Footer Inner Start -->
-                                                <div class="cart-footer fix">
+                                                <!-- <div class="cart-footer fix">
                                                     <h5>total :<span class="f-right">$698.00</span></h5>
                                                     <div class="cart-actions">
                                                         <a class="checkout" href="{% url 'checkout' %}">Checkout</a>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                                 <!-- Cart Footer Inner End -->
-                                            </li>
-                                        </ul>
+                                            <!-- </li>
+                                        </ul> -->
                                     </li>
                                 </ul>
                             </div>
@@ -246,33 +246,11 @@
                                     <h2>color</h2>
                                 </div>
                                 <ul class="color-option">
+                                    {% for col in color %}
                                     <li>
-                                        <a class="blue" href="#"></a>
+                                        <a href="{% url 'color' col.id %}" style="background-color:{{col.code}}" ></a>
                                     </li>
-                                    <li>
-                                        <a class="green" href="#"></a>
-                                    </li>
-                                    <li>
-                                        <a class="black" href="#"></a>
-                                    </li>
-                                    <li>
-                                        <a class="rose" href="#"></a>
-                                    </li>
-                                    <li>
-                                        <a class="red" href="#"></a>
-                                    </li>
-                                    <li>
-                                        <a class="purple" href="#"></a>
-                                    </li>
-                                    <li>
-                                        <a class="rose" href="#"></a>
-                                    </li>
-                                    <li>
-                                        <a class="yellow" href="#"></a>
-                                    </li>
-                                    <li>
-                                        <a class="orange" href="#"></a>
-                                    </li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                             <div class="single-sidebar">
@@ -281,8 +259,20 @@
                                 </div>
                                 <form action="#">
                                     <ul>
-                                        {% for f in price %}
-                                         <li><a href="{{f.id}}">{{f.price}}</a></li>
+                                        {% for f in filterprice %}
+                                         <li><a href="{% url 'price' f.id %}">{{f.price}}</a></li>
+                                         {% endfor %}
+                                      </ul>
+                                </form>
+                            </div>
+                            <div class="single-sidebar">
+                                <div class="group-title">
+                                    <h2>Size</h2>
+                                </div>
+                                <form action="#">
+                                    <ul>
+                                        {% for s in size %}
+                                         <li><a href="{% url 'size' s.id %}">{{s.name}}</a></li>
                                          {% endfor %}
                                       </ul>
                                 </form>

@@ -48,27 +48,21 @@
                                     <thead>
                                         <tr>
                                             <th>Order</th>
-                                            <th>Date</th>
-                                            <th>Status</th>
+                                            <th>Name</th>
                                             <th>Total</th>
-                                            <th>Actions</th>	 	 	 	
+                                            <th>Status</th>	 	 	
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {% for order in orders %}
                                         <tr>
-                                            <td>1</td>
-                                            <td>May 10, 2018</td>
-                                            <td>Processing</td>
-                                            <td>$25.00 for 1 item </td>
-                                            <td><a class="view" href="cart.html">view</a></td>
+                                            <td>{{order.quantity}}</td>
+                                            <td>{{order.product.name}}</td>
+                                            <td>₹{{order.payment.amount}}.00 </td>
+                                            <td>{{order.status}}</td>
                                         </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>May 10, 2018</td>
-                                            <td>Processing</td>
-                                            <td>$17.00 for 1 item </td>
-                                            <td><a class="view" href="cart.html">view</a></td>
-                                        </tr>
+
+                                    {% endfor %}
                                     </tbody>
                                 </table>
                             </div>

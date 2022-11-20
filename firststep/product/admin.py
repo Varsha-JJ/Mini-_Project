@@ -1,12 +1,14 @@
 import csv
 from django.contrib import admin
 from django.http import HttpResponse
-from .models import Product,Category,Color,Size
+from .models import Product,Category,Color,Size,Filter_Price,Payment,OrderPlaced
 # Register your models here.
 # admin.site.register(Product)
 admin.site.register(Category)
-admin.site.register(Color)
+# admin.site.register(Filter_Price)
 admin.site.register(Size)
+admin.site.register(Payment)
+admin.site.register(OrderPlaced)
 
 
 
@@ -28,5 +30,21 @@ class proAdmin(admin.ModelAdmin):
     list_display = ['name','price','publish']
     actions = [export_productdetail]
 
-
 admin.site.register(Product, proAdmin)
+
+
+class proColor(admin.ModelAdmin):
+    list_display = ['name','code']
+    actions = [export_productdetail]
+
+admin.site.register(Color, proColor)    
+
+class proPrice(admin.ModelAdmin):
+    list_display = ['price']
+    actions = [export_productdetail]
+
+admin.site.register(Filter_Price,proPrice)
+
+
+
+     
