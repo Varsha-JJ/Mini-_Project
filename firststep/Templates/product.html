@@ -65,8 +65,9 @@
                         <!-- Search Box Start -->                                        
                         <div class="col-lg-4 col-md-6 ml-auto mr-auto">
                             <div class="search-box-view">
-                                <form action="#">
-                                    <input type="text" class="email" placeholder="Search Your Product" name="product">
+                                <form action="{% url 'searchbar' %}" method="GET">
+                                    {% csrf_token %}
+                                    <input type="text" class="email" placeholder="Search Your Product" name="query">
                                     <button type="submit" class="submit"></button>
                                 </form>
                             </div>                                           
@@ -159,8 +160,8 @@
                                         </ul>
                                     </li>
                                     {% endif %}                                   
-                                    <li><a href="{% url 'wishlist' %}"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="{% url 'cart' %}"><i class="fa fa-shopping-basket"></i><span class="cart-counter"></span></a>
+                                    <li><a href="{% url 'view_wishlist' %}"><i class="fa fa-heart-o"></i></a></li>
+                                    <li><a href="{% url 'cart' %}"><i class="fa fa-shopping-basket"></i></a>
                                         <!-- <ul class="ht-dropdown main-cart-box">
                                             <li> -->
                                                 <!-- Cart Box Start -->
@@ -276,7 +277,7 @@
                                 <div class="">
                                     <div class="box-quantity">
                                         <form action="#">
-                                            <a  href="{% url 'cart' %}">SIZE</a>
+                                            <a  href="#">SIZE</a>
                                             {% for s in size %}
                                             <!-- <input class="number" id="numeric"> -->
                                             <button class="button button1">{{s.code}}</button>
@@ -301,7 +302,7 @@
                             </div>
                             <div class="product-link">
                                 <ul class="list-inline">
-                                    <li><a href="{% url 'wishlist' %}">Add to Wish List</a></li>
+                                    <li><a href="#">Add to Wish List</a></li>
                                 </ul>
                             </div>
                             <br>

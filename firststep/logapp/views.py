@@ -106,11 +106,11 @@ def logout(request):
 def home(request):
     category = Category.objects.all()
     products = Product.objects.all()
-    catid = request.GET.get('id')
-    if catid:
-        products = Product.objects.filter(category_id=catid)
-    else:
-        products = Product.objects.all()
+    # catid = request.GET.get('id')
+    # if catid:
+    #     products = Product.objects.filter(category_id=catid)
+    # else:
+    #     products = Product.objects.all()
     return render(request, "home.html", {'data':category} )
    
 

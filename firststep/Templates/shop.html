@@ -113,23 +113,23 @@
                                             <!-- Home Version Dropdown End -->
                                         </li> 
                                         <li><a href="{% url 'shop' %}">All category</a></li>                                      
-                                        <li><a href="{% url 'boys' %}">Boys<i class="fa fa-angle-down"></i></a>
+                                        <li><a href="{% url 'boys' %}">Boys</a>
                                             <!-- Home Version Dropdown Start -->
-                                            <ul class="ht-dropdown dropdown-style-two">
+                                            <!-- <ul class="ht-dropdown dropdown-style-two">
                                                 <li><a href="{% url 'shop' %}">All Dresses</a>
                                                 </li>
                                                 <li><a href="{% url 'shop' %}">Trouser</a></li>
                                                 <li><a href="{% url 'shop' %}">Shirts</a></li>
-                                            </ul>
+                                            </ul> -->
                                             <!-- Home Version Dropdown End -->
                                         </li>                                     
-                                        <li><a href="{% url 'girls' %}">Girls<i class="fa fa-angle-down"></i></a>
+                                        <li><a href="{% url 'girls' %}">Girls</a>
                                             <!-- Home Version Dropdown Start -->
-                                            <ul class="ht-dropdown dropdown-style-two">
+                                            <!-- <ul class="ht-dropdown dropdown-style-two">
                                                 <li><a href="{% url 'shop' %}">All dresses</a></li>
                                                 <li><a href="{% url 'shop' %}">Frock</a></li>
                                                 <li><a href="{% url 'shop' %}">Top&Skirt</a></li>
-                                            </ul>
+                                            </ul> -->
                                             <!-- Home Version Dropdown End -->
                                         </li>                                        
                                     </ul>
@@ -156,8 +156,8 @@
                                         </ul>
                                     </li>
                                     {% endif %}                                    
-                                    <li><a href="{% url 'wishlist' %}"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="{% url 'cart' %}"><i class="fa fa-shopping-basket"></i><span class="cart-counter">{% if totalitem > 0 %} {{totalitem}} {% endif %}</span></a>
+                                    <li><a href="{% url 'view_wishlist' %}"><i class="fa fa-heart-o"></i></a></li>
+                                    <li><a href="{% url 'cart' %}"><i class="fa fa-shopping-basket"></i></a>
                                         <!-- <ul class="ht-dropdown main-cart-box">
                                             <li> -->
                                                 <!-- Cart Box Start -->
@@ -334,7 +334,7 @@
                                                     <p><span class="price">Rs.{{i.price}}</span></p>
                                                     <div class="i-actions">
                                                         <div class="actions-secondary">
-                                                            <a href="{% url 'wishlist' %}" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
+                                                            <a href="{% url 'add_wishlist' i.id %}" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
                                                             <a class="add-cart" href="{% url 'addcart' i.id %}" data-toggle="tooltip" title="Add to Cart">Add To Cart</a>
                                                             
                                                         </div>

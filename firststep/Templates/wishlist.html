@@ -129,23 +129,23 @@
                                             <!-- Home Version Dropdown End -->
                                         </li>
                                         <li><a href="{% url 'shop' %}">All category</a></li>
-                                        <li><a href="{% url 'boys' %}">Boys<i class="fa fa-angle-down"></i></a>
+                                        <li><a href="{% url 'boys' %}">Boys</a>
                                             <!-- Home Version Dropdown Start -->
-                                            <ul class="ht-dropdown dropdown-style-two">
+                                            <!-- <ul class="ht-dropdown dropdown-style-two">
                                                 <li><a href="{% url 'shop' %}">All Dresses</a>
                                                 </li>
                                                 <li><a href="{% url 'shop' %}">Trouser</a></li>
                                                 <li><a href="{% url 'shop' %}">Shirts</a></li>
-                                            </ul>
+                                            </ul> -->
                                             <!-- Home Version Dropdown End -->
                                         </li>
-                                        <li><a href="{% url 'girls' %}">Girls<i class="fa fa-angle-down"></i></a>
+                                        <li><a href="{% url 'girls' %}">Girls</a>
                                             <!-- Home Version Dropdown Start -->
-                                            <ul class="ht-dropdown dropdown-style-two">
+                                            <!-- <ul class="ht-dropdown dropdown-style-two">
                                                 <li><a href="{% url 'shop' %}">All dresses</a></li>
                                                 <li><a href="{% url 'shop' %}">Frock</a></li>
                                                 <li><a href="{% url 'shop' %}">Top&Skirt</a></li>
-                                            </ul>
+                                            </ul> -->
                                             <!-- Home Version Dropdown End -->
                                         </li>
                                     </ul>
@@ -173,11 +173,11 @@
                                     </li>
                                     {% endif %}
                                     <li><a href="{% url 'wishlist' %}"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-shopping-basket"></i><span class="cart-counter">2</span></a>
-                                        <ul class="ht-dropdown main-cart-box">
+                                    <li><a href="{% url 'cart' %}"><i class="fa fa-shopping-basket"></i></a>
+                                        <!-- <ul class="ht-dropdown main-cart-box"> -->
                                             <li>
                                                 <!-- Cart Box Start -->
-                                                <div class="single-cart-box">
+                                                <!-- <div class="single-cart-box">
                                                     <div class="cart-img">
                                                         <a href="#"><img src="{% static 'img/menu/1.jpg' %}" alt="cart-image"></a>
                                                     </div>
@@ -186,10 +186,10 @@
                                                         <span>1 × $399.00</span>
                                                     </div>
                                                     <a class="del-icone" href="#"><i class="fa fa-window-close-o"></i></a>
-                                                </div>
+                                                </div> -->
                                                 <!-- Cart Box End -->
                                                 <!-- Cart Box Start -->
-                                                <div class="single-cart-box">
+                                                <!-- <div class="single-cart-box">
                                                     <div class="cart-img">
                                                         <a href="#"><img src="{% static 'img/menu/2.jpg' %}" alt="cart-image"></a>
                                                     </div>
@@ -198,15 +198,15 @@
                                                         <span>2 × $299.00</span>
                                                     </div>
                                                     <a class="del-icone" href="#"><i class="fa fa-window-close-o"></i></a>
-                                                </div>
+                                                </div> -->
                                                 <!-- Cart Box End -->
                                                 <!-- Cart Footer Inner Start -->
-                                                <div class="cart-footer fix">
+                                                <!-- <div class="cart-footer fix">
                                                     <h5>total :<span class="f-right">$698.00</span></h5>
                                                     <div class="cart-actions">
                                                         <a class="checkout" href="{% url 'checkout' %}">Checkout</a>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                                 <!-- Cart Footer Inner End -->
                                             </li>
                                         </ul>
@@ -290,6 +290,16 @@
                     <div class="col-md-12">
                         <!-- Form Start -->
                         <form action="#">
+                            {% if not wishlist %}
+
+                            <div style="height:300px;text-align: center;">
+                                <h2 style="font-family: sans-serif;color: rgb(246,86, 12);">Your Wishlist is Empty !!!!</h2><br>
+                                <div class="button-area">
+                                    <a href="{% url 'shop' %}" style="font-weight:bold;color:rgb(240, 16, 16);">Continue Shopping</a>
+                                    </div>
+                            </div>
+
+                           {% else %}
                             <!-- Table Content Start -->
                             <div class="table-content table-responsive">
                                 <table>
@@ -299,31 +309,24 @@
                                             <th class="product-thumbnail">Image</th>
                                             <th class="product-name">Product</th>
                                             <th class="product-price">Unit Price</th>
-                                            <th class="product-quantity">Stock Status</th>
+                                            <!-- <th class="product-quantity">Stock Status</th> -->
                                             <th class="product-subtotal">add to cart</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {% for i in wishlist %}
                                         <tr>
-                                            <td class="product-remove"> <a href="#"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                                            <td class="product-remove"> <a href="{% url 'de_wishlist' i.id %}"><i class="fa fa-times" aria-hidden="true"></i></a></td>
                                             <td class="product-thumbnail">
-                                                <a href="#"><img src="img/products/1.jpg" alt="cart-image" /></a>
+                                                <a href="{% url 'product_detail' i.product_id %}"><img src="{{i.product.product_image.url}}" alt="cart-image" /></a>
                                             </td>
-                                            <td class="product-name"><a href="#">Products Name Here</a></td>
-                                            <td class="product-price"><span class="amount">£165.00</span></td>
-                                            <td class="product-stock-status"><span>in stock</span></td>
-                                            <td class="product-add-to-cart"><a href="#">add to cart</a></td>
+                                            <td class="product-name"><a href="#">{{i.product.name}}</a></td>
+                                            <td class="product-price"><span class="amount">Rs.{{i.product.price}}</span></td>
+                                            <!-- <td class="product-stock-status"><span>in stock</span></td> -->
+                                            <td class="product-add-to-cart"><a href="{% url 'de_cart' i.id %}">add to cart</a></td>
                                         </tr>
-                                        <tr>
-                                            <td class="product-remove"> <a href="#"><i class="fa fa-times" aria-hidden="true"></i></a></td>
-                                            <td class="product-thumbnail">
-                                               <a href="#"><img src="img/products/2.jpg" alt="cart-image" /></a>
-                                            </td>
-                                            <td class="product-name"><a href="#">Products Name Here</a></td>
-                                            <td class="product-price"><span class="amount">£50.00</span></td>
-                                            <td class="product-stock-status"><span>in stock</span></td>
-                                            <td class="product-add-to-cart"><a href="#">add to cart</a></td>
-                                        </tr>
+                                        {% endfor %}
+                                        {% endif %}
                                     </tbody>
                                 </table>
                             </div>

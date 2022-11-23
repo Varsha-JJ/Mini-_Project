@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib import messages
-from .models import Product,Category,Size,Cart,Filter_Price,Color,Payment,OrderPlaced
+from .models import Product,Category,Size,Cart,Filter_Price,Color,Payment,OrderPlaced,Wishlist
 from django.db.models import Q
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
@@ -15,7 +15,8 @@ def product_detail(request,id):
     # wishlist = Wishlist.object.filter(Q(product=product) & Q(user=request.user))
     products = Product.objects.get(id=id)
     cart = Cart.objects.all()
-    return render(request,'product.html',{'product' : products,'size':sizes,'cart':cart})
+    wishlist = Wishlist.objects.all()
+    return render(request,'product.html',{'product' : products,'size':sizes,'cart':cart,'wishlist':wishlist})
 
 # def category(request):
 #     return render(request,'category.html')
@@ -23,21 +24,33 @@ def product_detail(request,id):
 def category(request,id):
     if( Category.objects.filter(id=id)):
         products   = Product.objects.filter(category_id=id)  
+    else:
+        messages.info(request, 'No Search Result!!!')
+        print("No information to show")
     return render(request,'category.html',{'data':category,'product':products})
 
 def size(request,id):
     if( Size.objects.filter(id=id)):
         products   = Product.objects.filter(size_id=id)  
+    else:
+        messages.info(request, 'No Search Result!!!')
+        print("No information to show")
     return render(request,'size.html',{'product':products,'size':size})
 
 def color(request,id):
     if(Color.objects.filter(id=id)):
         products   = Product.objects.filter(color_id=id)  
+    else:
+        messages.info(request, 'No Search Result!!!')
+        print("No information to show")
     return render(request,'color.html',{'product':products,'color':color})
 
 def price(request,id):
     if(Filter_Price.objects.filter(id=id)):
         products  = Product.objects.filter(filterprice_id=id)  
+    else:
+        messages.info(request, 'No Search Result!!!')
+        print("No information to show")
     return render(request,'price.html',{'product':products,'filterprice':price})    
 
 def shop(request):
@@ -236,3 +249,34 @@ def payment_done(request):
         OrderPlaced(user=request.user,product=c.product,quantity=c.product_qty,payment=payment,is_ordered=True).save()
         c.delete()
     return redirect('orders')
+
+@login_required(login_url='login')
+def add_wishlist(request,id):
+    user = request.user
+    item=Product.objects.get(id=id)
+    if Wishlist.objects.filter( user_id =user,product_id=item).exists():
+        messages.success(request, 'Already in the wishlist ')
+        return redirect('shop')
+    else:
+            new_wishlist=Wishlist(user_id=user.id,product_id=item.id)
+            new_wishlist.save()
+            messages.success(request, 'Product added to the wishlist ')
+            return redirect('shop')
+    # messages.success(request, 'Sign in..!!')
+    # return redirect(index)
+
+
+#Wishlist View page
+@login_required(login_url='login')
+def view_wishlist(request):
+        user = request.user
+        wish=Wishlist.objects.filter(user_id=user)
+        category=Category.objects.all()
+
+        return render(request,"wishlist.html",{'wishlist':wish,'category':category})
+
+
+# Remove Items From Wishlist
+def de_wishlist(request,id):
+    Wishlist.objects.get(id=id).delete()
+    return redirect('view_wishlist')

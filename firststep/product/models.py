@@ -9,9 +9,9 @@ from django.utils.safestring import mark_safe
 # Create your models here.
 
 class Category(models.Model):
-    title       = models.CharField(max_length=100)
-    category_image = models.ImageField(upload_to='category_image/',blank=True,null=True)
-    slug        = models.SlugField(max_length=255, unique=True)
+    title       = models.CharField(max_length=100,unique=True)
+    # category_image = models.ImageField(upload_to='category_image/',blank=True,null=True)
+    # slug        = models.SlugField(max_length=255, unique=True)
 
 
     def __str__(self):
@@ -25,7 +25,7 @@ class Category(models.Model):
 
 
 class Color(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50,unique=True)
     code = models.CharField(max_length=20,blank=True,null=True)
        
     def __str__(self):
@@ -36,7 +36,7 @@ class Color(models.Model):
             return mark_safe('<p> style="background-color:{}">Color</p>'.format(self.code))
 
 class Size(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50,unique=True)
     code = models.CharField(max_length=20,blank=True,null=True)
 
     def __str__(self):
@@ -49,15 +49,15 @@ class Size(models.Model):
 #     )
 
 class Filter_Price(models.Model):
-    price = models.CharField(max_length=50,default=0)
+    price = models.CharField(max_length=50,default=0,unique=True)
 
 class Product(models.Model):
-    name          = models.CharField(max_length=100)
+    name          = models.CharField(max_length=100,unique=True)
     category      = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
     size          = models.ForeignKey(Size, on_delete=models.CASCADE, default=1)
     color         = models.ForeignKey(Color, on_delete=models.CASCADE, default=1)
     filterprice   = models.ForeignKey(Filter_Price, on_delete=models.CASCADE,default=1)
-    product_image = models.ImageField(upload_to='product_image/')
+    product_image = models.ImageField(upload_to='product_image/',unique=True)
     price         = models.IntegerField(default=0)
     stock         = models.IntegerField(default=0)
     description   = models.TextField(max_length=1000,default='')

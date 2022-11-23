@@ -37,7 +37,7 @@
                             <p><span class="price">Rs.{{pro.price}}</span></p>
                             <div class="pro-actions">
                                 <div class="actions-secondary">
-                                    <a href="{% url 'wishlist' %}" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
+                                    <a href="{% url 'view_wishlist' %}" data-toggle="tooltip" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
                                     <a class="add-cart" href="{% url 'cart' %}" data-toggle="tooltip" title="Add to Cart">Add To Cart</a>
                                     
                                 </div>
@@ -48,8 +48,7 @@
                 </div>
                 {% endfor %}
                 <br><br>
-                {% include 'Message.html' %}
-                                  
+                {% include 'Message.html' %}          
             </div>                                    
         </div>
         <!-- #grid view End -->

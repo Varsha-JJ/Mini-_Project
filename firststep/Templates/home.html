@@ -179,8 +179,8 @@
                                         </ul>
                                     </li>
                                     {% endif %}
-                                    <li><a href="{% url 'wishlist' %}"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="{% url 'cart' %}"><i class="fa fa-shopping-basket"></i><span class="cart-counter"></span></a>
+                                    <li><a href="{% url 'view_wishlist' %}"><i class="fa fa-heart-o"></i></a></li>
+                                    <li><a href="{% url 'cart' %}"><i class="fa fa-shopping-basket"></i></a>
                                         <!-- <ul class="ht-dropdown main-cart-box">
                                             <li>
                                                 Cart Box Start
@@ -318,19 +318,19 @@
         <!-- Best Products Start -->
         <div class="best-seller-product pb-30">
             <div class="container">
-                <div class="group-title">
+                <!-- <div class="group-title">
                     <h2>C A T E G O R I E S</h2>
                 </div>
-                <br>
+                <br> -->
                 <!-- Best Product Activation Start -->
                 <div class="row">
                     <!-- Single Blog Start -->
-                    {% for x in data %}                    
+                                   
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="single-blog">
-                            <div class="blog-img">
-                                <a href="blog-details.html"><img src="" alt="blog-image"></a>
-                            </div>
+                            <!-- <div class="blog-img">
+                                <a href="#"><img src="{{category.category_image.url}}" alt="blog-image"></a>
+                            </div> -->
                             <!-- <div class="blog-content">
                                     <h4 class="blog-title"><a href="blog-details.html">{{x.title}}</a></h4> -->
                                 <!-- <div class="blog-meta">
@@ -345,7 +345,7 @@
                             <!-- </div> -->
                         </div>
                     </div>
-                    {% endfor %}
+               
                 <!-- Single Blog End -->
                 </div>
                 <!-- Best Product Activation End -->
